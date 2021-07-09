@@ -1,7 +1,8 @@
+
 const Sauce = require("../models/thing");
 const fs = require("fs");
 
-//---------------------------------------------------------------
+//creation sauce
 exports.createSauce = (req, res, next) => {
   const sauceObject = json.parse(req.body.sauce);
   delete sauceObject._id; //retirer le id car il va etre creé par mongo
@@ -17,7 +18,7 @@ exports.createSauce = (req, res, next) => {
     .catch((error) => res.status(400).json({ error }));
 };
 
-//---------------------------------------------------------------
+//modification sauce
 exports.modifySauce = (req, res, next) => {
   const sauceObject = req.file
     ? {
@@ -35,13 +36,13 @@ exports.modifySauce = (req, res, next) => {
     .catch((error) => res.status(400).json({ error }));
 };
 
-//-----------------------------------------------------------------
+//suppression sauce
 exports.deleteSauce = (req, res, next) => {
   Sauce.findOne({ _id: req.params.id })
     .then((sauce) => {
       const filename = sauce.imageUrl.split("/images/")[1];
       fs.unlink(`images/${filename}`, () => {
-        Sauce.deleteOne({ UserId: req.params.id })
+        Sauce.deleteOne({ _id: req.params.id })
           .then(() => res.status(200).json({ message: "Objet supprimé !" }))
           .catch((error) => res.status(400).json({ error }));
       });
@@ -49,16 +50,18 @@ exports.deleteSauce = (req, res, next) => {
     .catch((error) => res.status(500).json({ error }));
 };
 
-//--------------------------------------------------------------------
+//afficher ttes les sauces
 exports.getAllSauces = (req, res, next) => {
   Sauce.find()
     .then((sauces) => res.status(200).json({ sauces }))
     .catch((error) => res.status(400).json({ error }));
 };
 
-//-----------------------------------------------------------------------
+//afficher une sauce
 exports.getOneSauce = (req, res, next) => {
-  Sauce.findOne({ userId: req.params.id })
+  Sauce.findOne({ _id: req.params.id })
     .then((sauce) => res.status(200).json(sauce))
     .catch((error) => res.status(404).json({ error }));
 };
+
+// like et dislike--------------------------------
