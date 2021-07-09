@@ -10,11 +10,13 @@ const MIME_TYPES = {
 };
 
 
-//
+//configuration de multer
 const storage = multer.diskStorage({
+  //indication où enregistrer les fichiers entrants
   destination: (req, file, callback) => {
     callback(null, "images");
   },
+  //indication d'utiliser des parametres: nom d'origine, espace vs underscore, ajout de timestamp comme nom de fichier
   filename: (req, file, callback) => {
     const name = file.originalname.split(" ").join("_");
     const extension = MIME_TYPES[file.mimetype];
@@ -22,4 +24,4 @@ const storage = multer.diskStorage({
   },
 });
 
-module.exports = multer({storage: storage}).single("image");
+module.exports = multer({storage}).single("image");
