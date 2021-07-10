@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 
 
 //creation schema de base de donnée
-const saucesSchema = mongoose.Schema({
+const sauceSchema = mongoose.Schema({
   userId: { type: String, required: true },
   name: { type: String, required: true }, 
   manufacturer: { type: String, required: true },
@@ -17,4 +17,4 @@ const saucesSchema = mongoose.Schema({
   usersDisliked: { type: [String], required: true},
 });
 
-module.exports = mongoose.model("Sauce", saucesSchema);
+module.exports = mongoose.model("Sauce", sauceSchema);

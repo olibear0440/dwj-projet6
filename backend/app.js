@@ -37,12 +37,12 @@ app.use((req, res, next) => {
 //app.use(bodyParser.json());
 app.use(express.json());
 
+//enregistrement des routeurs
+app.use("/api/sauces", stuffRoutes);
+app.use("/api/auth", userRoutes);
+
 //middleware pour les images
 app.use("/images", express.static(path.join(__dirname, "images")));
-
-//enregistrement des routeurs
-app.use("/api/auth", userRoutes);
-app.use("/api/sauces", stuffRoutes);
 
 //export de l'appli vers les autres fichiers
 module.exports = app;
