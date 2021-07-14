@@ -1,16 +1,15 @@
 //import packages
 const express = require("express");
 const mongoose = require("mongoose");
-//const bodyParser = require("body-parser");
 const path = require("path");
 
 const stuffRoutes = require("./routes/stuff");
 const userRoutes = require("./routes/user");
 
-//mon application
+//l'application express
 const app = express();
 
-//connexion mongoDB
+//logique de connexion à mongoDB (base de donnée et hebergement gratuit)
 mongoose
   .connect(
     "mongodb+srv://OlivierBenoit:Tigerwood0440@clustertest.i1tkd.mongodb.net/OlivierOPCR?retryWrites=true&w=majority",
@@ -19,7 +18,8 @@ mongoose
   .then(() => console.log("Connexion à MongoDB réussie !"))
   .catch(() => console.log("Connexion à MongoDB échouée !"));
 
-//evite erreur CORS (securite de requette malveillante)
+
+//middleware qui evite l'erreur CORS (securite de requette malveillante)
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
@@ -33,8 +33,7 @@ app.use((req, res, next) => {
   next();
 });
 
-//transformer le json en objet javascript pour tte les routes
-//app.use(bodyParser.json());
+
 app.use(express.json());
 
 //enregistrement des routeurs
@@ -44,5 +43,5 @@ app.use("/api/auth", userRoutes);
 //middleware pour les images
 app.use("/images", express.static(path.join(__dirname, "images")));
 
-//export de l'appli vers les autres fichiers
+//export de l'application express vers les autres fichiers
 module.exports = app;

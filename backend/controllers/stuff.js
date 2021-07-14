@@ -1,7 +1,11 @@
+// import package
 const Sauce = require("../models/thing");
 const fs = require("fs");
 
-//creation sauce
+
+/*---debut de logique metier-----------------------------------------------------*/
+
+//creation d'une sauce
 exports.createSauce = (req, res, next) => {
   const sauceObject = JSON.parse(req.body.sauce);
   delete sauceObject._id; //retirer le id car il va etre creé par mongo
@@ -17,7 +21,7 @@ exports.createSauce = (req, res, next) => {
     .catch((error) => res.status(400).json({ error }));
 };
 
-//modification sauce
+//modification d'une sauce
 exports.modifySauce = (req, res, next) => {
   const sauceObject = req.file
     ? {
@@ -35,7 +39,7 @@ exports.modifySauce = (req, res, next) => {
     .catch((error) => res.status(400).json({ error }));
 };
 
-//suppression sauce
+//suppression d'une sauce
 exports.deleteSauce = (req, res, next) => {
   Sauce.findOneAndDelete({ _id: req.params.id })
     .then((sauce) => {
@@ -58,14 +62,14 @@ exports.getAllSauces = (req, res, next) => {
 
 };
 
-//afficher une sauce
+//Recuperation d'une sauce
 exports.getOneSauce = (req, res, next) => {
   Sauce.findOne({ _id: req.params.id })
     .then((sauce) => res.status(200).json(sauce))
     .catch((error) => res.status(404).json({ error }));
 };
 
-//like et dislike
+//action de like et dislike d'une sauce
 exports.likeSauce = (req, res, next) => {
   if (req.body.like == 1) {
     Sauce.updateOne(
@@ -124,3 +128,4 @@ exports.likeSauce = (req, res, next) => {
     });
   }
 };
+/*---Fin de logique metier------------------------------------------------------------*/

@@ -1,10 +1,10 @@
-//import packages
+//import package http de node
 const http = require("http");
 
-//importer mon application
+//import de l'application express
 const app = require("./app");
 
-//port utilisé par l'application
+//port utilisé par l'application express
 app.set("port", process.env.PORT || 3000);
 
 //creation du serveur

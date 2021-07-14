@@ -8,7 +8,7 @@ const MIME_TYPES = {
   "image/png": "png",
 };
 
-//configuration de multer
+/*---configuration de multer----------------------------------------------*/
 const storage = multer.diskStorage({
   //indication où enregistrer les fichiers entrants
   destination: (req, file, callback) => {
@@ -22,4 +22,5 @@ const storage = multer.diskStorage({
   },
 });
 
+//export du middleware multer 
 module.exports = multer({ storage }).single("image");

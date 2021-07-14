@@ -1,39 +1,41 @@
-//import
-const bcrypt = require("bcrypt");
+//import package
+const bcrypt = require("bcrypt"); //package de cryptage
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 
-//creation user
+
+/*---fonction d'enregistrement d'un nouvel utilisateur-----------------------------------*/
 exports.signup = (req, res, next) => {
   bcrypt
-    .hash(req.body.password, 10)
+    .hash(req.body.password, 10) //hashage (cryptage) du mot de passe/ algorithme passé 10 fois
     .then((hash) => {
-      const user = new User({
+      const user = new User({ //enregistrement du hash dans un new user 
         email: req.body.email,
         password: hash,
       });
       user
-        .save()
+        .save() //enregistrement dans la base de donnée
         .then(() => res.status(201).json({ message: "Utilisateur créé !" }))
         .catch((error) => res.status(400).json({ error }));
     })
     .catch((error) => res.status(500).json({ error }));
 };
 
-//login
+
+/*---fonction de connexion d'un utilisateur existant------------------------------------*/
 exports.login = (req, res, next) => {
-  User.findOne({ email: req.body.email })
+  User.findOne({ email: req.body.email })// trouver l'user de la base de donnée
     .then((user) => {
-      if (!user) {
+      if (!user) { //si pas de user
         return res.status(401).json({ error: "Utilisateur non trouvé !" });
       }
-      bcrypt
+      bcrypt// utilisation de bcrypt pour comparer le mdp utilisé avec le user reçu
         .compare(req.body.password, user.password)
         .then((valid) => {
-          if (!valid) {
+          if (!valid) { //si mdp incorrect entré
             return res.status(401).json({ error: "Mot de passe incorrect !" });
           }
-          res.status(200).json({
+          res.status(200).json({ //renvoi de requette ok, objet json (user id) et token
             userId: user._id,
             token: jwt.sign({ userId: user._id }, "RANDOM_TOKEN_SECRET", {
               expiresIn: "24h",
@@ -42,5 +44,5 @@ exports.login = (req, res, next) => {
         })
         .catch((error) => res.status(500).json({ error }));
     })
-    .catch((error) => res.status(500).json({ error }));
+    .catch((error) => res.status(500).json({ error })); //pb de connexion mongodb
 };
