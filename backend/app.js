@@ -2,6 +2,10 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
+const dotenv = require('dotenv');
+dotenv.config();
+
+const mongoLink = process.env.mongoLink;
 
 const stuffRoutes = require("./routes/stuff");
 const userRoutes = require("./routes/user");
@@ -12,7 +16,7 @@ const app = express();
 //logique de connexion à mongoDB (base de donnée et hebergement gratuit)
 mongoose
   .connect(
-    "mongodb+srv://OlivierBenoit:Tigerwood0440@clustertest.i1tkd.mongodb.net/OlivierOPCR?retryWrites=true&w=majority",
+    process.env.mongoLink,
     { useNewUrlParser: true, useUnifiedTopology: true }
   )
   .then(() => console.log("Connexion à MongoDB réussie !"))
