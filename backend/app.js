@@ -37,7 +37,9 @@ app.use((req, res, next) => {
   next();
 });
 
+//protection de l'application par configuration des en-tetes http
 app.use(helmet());
+
 app.use(express.json());
 
 //enregistrement des routeurs
