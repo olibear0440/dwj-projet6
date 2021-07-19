@@ -1,8 +1,9 @@
 //import packages
 const express = require("express");
+const helmet = require("helmet");
 const mongoose = require("mongoose");
 const path = require("path");
-const dotenv = require('dotenv');
+const dotenv = require("dotenv");
 dotenv.config();
 
 const mongoLink = process.env.mongoLink;
@@ -15,13 +16,12 @@ const app = express();
 
 //logique de connexion à mongoDB (base de donnée et hebergement gratuit)
 mongoose
-  .connect(
-    process.env.mongoLink,
-    { useNewUrlParser: true, useUnifiedTopology: true }
-  )
+  .connect(process.env.mongoLink, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => console.log("Connexion à MongoDB réussie !"))
   .catch(() => console.log("Connexion à MongoDB échouée !"));
-
 
 //middleware qui evite l'erreur CORS (securite de requette malveillante)
 app.use((req, res, next) => {
@@ -37,7 +37,7 @@ app.use((req, res, next) => {
   next();
 });
 
-
+app.use(helmet());
 app.use(express.json());
 
 //enregistrement des routeurs
