@@ -1,6 +1,7 @@
 //import packages
 const express = require("express");
 const helmet = require("helmet");
+const mongoSanitize = require("express-mongo-sanitize");
 const mongoose = require("mongoose");
 const path = require("path");
 const dotenv = require("dotenv");
@@ -39,6 +40,9 @@ app.use((req, res, next) => {
 
 //protection de l'application par configuration des en-tetes http
 app.use(helmet());
+
+//protection  contre l'injection de caractere interdit dans les entrées de données utilisateurs
+app.use(mongoSanitize({ replaceWith: "_" }));
 
 app.use(express.json());
 
