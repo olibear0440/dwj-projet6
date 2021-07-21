@@ -14,3 +14,6 @@ Démarrer ng serve pour avoir accès au serveur de développement. Rendez-vous
 ### Backend
 
 Voir le fichier README du dossier backend.
+
+#### Inscription
+Afin de s'inscrire dans l'application, le mot de passe doit contenir entre 6 et 20 caracteres dont une majuscule, une minuscule, un chiffre et un symbole.
