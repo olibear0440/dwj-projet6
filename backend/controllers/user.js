@@ -4,8 +4,8 @@ const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 const passwordValidator = require("password-validator");
 
+//parametre de mot de passe attendu
 const newPassword = new passwordValidator();
-
 newPassword
   .is()
   .min(8)
