@@ -8,7 +8,7 @@ const newPassword = new passwordValidator();
 
 newPassword
   .is()
-  .min(6)
+  .min(8)
   .is()
   .max(20)
   .has()
@@ -41,7 +41,7 @@ exports.signup = (req, res, next) => {
       })
       .catch((error) => res.status(500).json({ error }));
   } else {
-    throw "Le mot de passe doit contenir entre 6 et 20 caracteres dont une majuscule, une minuscule, un chiffre et un symbole";
+    throw "Le mot de passe doit contenir entre 8 et 20 caracteres dont une majuscule, une minuscule, un chiffre et un symbole";
   }
 };
 
